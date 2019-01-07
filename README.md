@@ -1,10 +1,10 @@
 # research-proof-of-concepts-2019
 Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Space Game
-- Line Sensors
-- SPARK / NEO Motors
-- Running Autons During/After the Sandstorm
-- Teleop Integration into Auton
-- Motion Profiling with Pathweaver
-- PID Tuning(Distance/Angle)
-- Camera View (Optimal Quality + Bandwidth Restrictions)
-- On board compressor
+- Line Sensors (Bryan, Jin for now
+- SPARK / NEO Motors (Victor, Jin)
+- Running Autons During/After the Sandstorm (Helena)
+- Teleop Integration into Auton (Helena)
+- Motion Profiling with Pathweaver (Kevin, Tahsin)
+- PID Tuning(Distance/Angle) (Pak
+- Camera View (Optimal Quality + Bandwidth Restrictions) (Winston
+- On board compressor (Bryan, 
