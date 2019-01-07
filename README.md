@@ -7,3 +7,4 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 - Motion Profiling with Pathweaver
 - PID Tuning(Distance/Angle)
 - Camera View (Optimal Quality + Bandwidth Restrictions)
+- On board compressor
