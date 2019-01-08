@@ -10,6 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,6 +46,18 @@ public class Robot extends IterativeRobot {
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
+
+    private void updateSmartDashboard() {
+        Map<String, boolean> cameraStreamProperties= new HashMap<>();
+        cameraStreamProperties.put("Show Crosshairs", true);
+        cameraStreamProperties.put("Show Controls", true);
+        NetworkTableEntry cameraStream = Shuffleboard.getTab("Camera Stream").
+            add("Camera Stream", new CameraServer(RobotMap.CAMERA_SERVER_PORT).startAutomaticCapture()).
+            withWidget(BuiltInWidgets.kCameraStream).
+            withProperties(cameraStreamProperties).
+            getEntry();
+    }
+    
   @Override
   public void robotPeriodic() {
   }
