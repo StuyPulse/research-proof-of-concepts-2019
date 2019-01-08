@@ -3,30 +3,6 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 
 ### PRATHAM's
 
-- Line Sensors (Cynthia, Jin)
-	- Sandy, Shirley
-	- **Goals:**
-	1. Detect Lines (White on Grey Carpet)
-	2. Figure out optimal line sensor placement along with alignment logic
-	3. Optimize the line sensor code to get the robot moving at a fast speed and still stop at a line while sensing it.
-- SPARK / NEO Motors (Victor, Jin)
-	- Lei, Randy, Ayan
-	- **Goals:**
-	1. Robot moves with NEOS
-	2. PID tuning with NEOS
-- Running Autons During/After the Sandstorm (Helena)
-	- Joshua, Rayat, Miguel
-	- **Goals:**
-	1. Running autons for 15 sec with 2019 code
-	2. Running autons > 15 sec
-- Teleop Integration into Auton (Helena)
-	- Joshua, Rayat, Miguel
-	- **Goals:**
-	1. Run Autonomated commands in teleop with push of a button
-	2. Operate in sandstorm period
-	
-### HUI MIN's
-
 - PID Tuning(Distance/Angle) and then Motion Profiling (Pak)
 	- Stephanie, Bryan, Alvin
 	- Lei, Randy, Ayan (for now)
@@ -35,6 +11,11 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 	2. Code rotateDegreesCommand
 	3. Get the robot moving with Motion Profiling code
 	2. Get a robot to follow a consistent path (aka ideal autos) from Motion Profiling Code
+	- SPARK / NEO Motors (Victor, Jin)
+	- Lei, Randy, Ayan
+	- **Goals:**
+	1. Robot moves with NEOS
+	2. PID tuning with NEOS
 - Camera View (Optimal Quality + Bandwidth Restrictions) (Winston, Timothy)
 	- Nicky, Fahad
 	- **Goals:**
@@ -45,6 +26,24 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 	- Justin, Jason, Max
 	- **Goals:**
 	1. Compress on the robot
+	
+### HUI MIN's
+- Line Sensors (Cynthia, Jin)
+	- Sandy, Shirley
+	- **Goals:**
+	1. Detect Lines (White on Grey Carpet)
+	2. Figure out optimal line sensor placement along with alignment logic
+	3. Optimize the line sensor code to get the robot moving at a fast speed and still stop at a line while sensing it.
+- Running Autons During/After the Sandstorm (Helena)
+	- Joshua, Rayat, Miguel
+	- **Goals:**
+	1. Running autons for 15 sec with 2019 code
+	2. Running autons > 15 sec
+- Teleop Integration into Auton (Helena)
+	- Joshua, Rayat, Miguel
+	- **Goals:**
+	1. Run Autonomated commands in teleop with push of a button
+	2. Operate in sandstorm period
 - Motion Profiling with PathWeaver (Tahsin, Kevin)
 	- Some of PID tuning group later
 	- **Goals:**
