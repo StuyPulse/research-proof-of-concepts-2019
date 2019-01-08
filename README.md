@@ -21,16 +21,13 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 	- **Goals:**
 	1. Run Autonomated commands in teleop with push of a button
 	2. Operate in sandstorm period
-- Motion Profiling with Pathweaver (Kevin, Tahsin)
-	- Brian, Alvin
-	- **Goals:**
-	1. Get the robot moving with Motion Profiling code
-	2. Get a robot to follow a consistent path (aka ideal autos) from Motion Profiling Code
-- PID Tuning(Distance/Angle) (Pak
+- PID Tuning(Distance/Angle) and then Motion Profiling (Pak, Tahsin
 	- Stephanie, Bryan, Alvin
 	- **Goals:**
 	1. Code driveStraightCommand
 	2. Code rotateDegreesCommand
+	3. Get the robot moving with Motion Profiling code
+	2. Get a robot to follow a consistent path (aka ideal autos) from Motion Profiling Code
 - Camera View (Optimal Quality + Bandwidth Restrictions) (Winston
 	- Nicky, Fahad
 	- **Goals:**
