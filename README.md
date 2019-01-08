@@ -1,6 +1,9 @@
 # research-proof-of-concepts-2019
 Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Space Game
-- Line Sensors (Bryan, Jin for now
+
+### PRATHAM's
+
+- Line Sensors (Cynthia, Jin)
 	- Sandy, Shirley
 	- **Goals:**
 	1. Detect Lines (White on Grey Carpet)
@@ -21,20 +24,30 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 	- **Goals:**
 	1. Run Autonomated commands in teleop with push of a button
 	2. Operate in sandstorm period
-- PID Tuning(Distance/Angle) and then Motion Profiling (Pak, Tahsin
+	
+### HUI MIN's
+
+- PID Tuning(Distance/Angle) and then Motion Profiling (Pak)
 	- Stephanie, Bryan, Alvin
+	- Lei, Randy, Ayan (for now)
 	- **Goals:**
 	1. Code driveStraightCommand
 	2. Code rotateDegreesCommand
 	3. Get the robot moving with Motion Profiling code
 	2. Get a robot to follow a consistent path (aka ideal autos) from Motion Profiling Code
-- Camera View (Optimal Quality + Bandwidth Restrictions) (Winston
+- Camera View (Optimal Quality + Bandwidth Restrictions) (Winston, Timothy)
 	- Nicky, Fahad
 	- **Goals:**
 	1. Successfully broadcast video feed to DriverStation
 	2. Find the equilibrium point between high quality and low lag
 	3. Overlay crosshairs, data, etc. over the video feed recieved
-- On board compressor (Bryan,
+- On board compressor (Bryan)
 	- Justin, Jason, Max
 	- **Goals:**
 	1. Compress on the robot
+- Motion Profiling with PathWeaver (Tahsin, Kevin)
+	- Some of PID tuning group later
+	- **Goals:**
+	1. Create paths + run paths for autons Blay wants
+	2. Tune paths
+	3. Implement Motion Profiling + CV
