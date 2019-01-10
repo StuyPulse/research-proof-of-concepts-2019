@@ -42,7 +42,9 @@ public class Robot extends TimedRobot {
     operatorGamepad = new Gamepad(RobotMap.OPERATOR_GAMEPAD_PORT);
     compressor = new Compressor(-1);
     m_chooser.addObject("My Auto", kCustomAuto);
+// <<<<<<< H./EAD
 
+// >>>>>>> 98814dd5fa369af4a910671685dcb6e645984e2e
     SmartDashboard.putData("Auto choices", m_chooser);
 
   }
