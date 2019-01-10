@@ -7,10 +7,17 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.SendableCameraWrapper;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import main.java.frc.robot.RobotMap;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,12 +36,10 @@ public class Robot extends TimedRobot {
     Map<String, Object> cameraStreamProperties = new HashMap<>();
     cameraStreamProperties.put("Show Crosshairs", true);
     cameraStreamProperties.put("Show Controls", true);
-    NetworkTableEntry cameraStream = Shuffleboard.getTab("Camera Stream").
-        add("Camera Stream", new SendableCameraWrapper()).
-        withWidget(BuiltInWidgets.kCameraStream).
-        withProperties(cameraStreamProperties).
-        getEntry();
-    cameraStream.setValue(new CameraStream(RobotMap.CAMERA_STREAM));
+    Shuffleboard.getTab("Camera Stream")
+        .add("Camera Stream", SendableCameraWrapper.wrap(new UsbCamera("Definitely Not The NSA", RobotMap.CAMERA_PATH)))
+        .withWidget(BuiltInWidgets.kCameraStream)
+        .withProperties(cameraStreamProperties);
 }
 
   /**
@@ -46,6 +51,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    updateSmartDashboard();
   }
 
   /**
