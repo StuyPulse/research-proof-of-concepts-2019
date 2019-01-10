@@ -10,8 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Compressor;
-import frc.util.Gamepad;
+import main.java.frc.robot.RobotMap;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,12 +22,20 @@ import frc.util.Gamepad;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  private Compressor compressor;
-  private OI oi;
-  private Gamepad driverGamepad;
-  private Gamepad operatorGamepad;
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  private void updateSmartDashboard() {
+    Map<String, Object> cameraStreamProperties = new HashMap<>();
+    cameraStreamProperties.put("Show Crosshairs", true);
+    cameraStreamProperties.put("Show Controls", true);
+    NetworkTableEntry cameraStream = Shuffleboard.getTab("Camera Stream").
+        add("Camera Stream", new SendableCameraWrapper()).
+        withWidget(BuiltInWidgets.kCameraStream).
+        withProperties(cameraStreamProperties).
+        getEntry();
+    cameraStream.setValue(new CameraStream(RobotMap.CAMERA_STREAM));
+}
 
   /**
    * This function is run when the robot is first started up and should be
@@ -36,20 +43,34 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_chooser.addDefault("Default Auto", kDefaultAuto);
-    oi = new OI();
-    driverGamepad = new Gamepad(RobotMap.DRIVER_GAMEPAD_PORT);
-    operatorGamepad = new Gamepad(RobotMap.OPERATOR_GAMEPAD_PORT);
-    compressor = new Compressor(-1);
-    m_chooser.addObject("My Auto", kCustomAuto);
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-
   }
 
+  /**
+   * This function is called every robot packet, no matter the mode. Use
+   * this for items like diagnostics that you want ran during disabled,
+   * autonomous, teleoperated and test.
+   *
+   * <p>This runs after the mode specific periodic functions, but before
+   * LiveWindow and SmartDashboard integrated updating.
+   */
   @Override
   public void robotPeriodic() {
   }
 
+  /**
+   * This autonomous (along with the chooser code above) shows how to select
+   * between different autonomous modes using the dashboard. The sendable
+   * chooser code works with the Java SmartDashboard. If you prefer the
+   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+   * getString line to get the auto name from the text box below the Gyro
+   *
+   * <p>You can add additional auto modes by adding additional comparisons to
+   * the switch structure below with additional strings. If using the
+   * SendableChooser make sure to add them to the chooser code above as well.
+   */
   @Override
   public void autonomousInit() {
     m_autoSelected = m_chooser.getSelected();
@@ -78,12 +99,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    if(operatorGamepad.getRawRightTrigger()) {
-      compressor.start();
-    }
-    else {
-      compressor.stop();
-    }
   }
 
   /**
