@@ -24,8 +24,6 @@ public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private Compressor compressor;
-  private OI oi;
-  private Gamepad driverGamepad;
   private Gamepad operatorGamepad;
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -36,15 +34,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_chooser.addDefault("Default Auto", kDefaultAuto);
-    oi = new OI();
-    driverGamepad = new Gamepad(RobotMap.DRIVER_GAMEPAD_PORT);
     operatorGamepad = new Gamepad(RobotMap.OPERATOR_GAMEPAD_PORT);
     compressor = new Compressor(-1);
-    m_chooser.addObject("My Auto", kCustomAuto);
-// <<<<<<< H./EAD
 
-// >>>>>>> 98814dd5fa369af4a910671685dcb6e645984e2e
     SmartDashboard.putData("Auto choices", m_chooser);
 
   }

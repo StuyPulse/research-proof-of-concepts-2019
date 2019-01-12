@@ -1,7 +1,6 @@
 package frc.robot;
 
 import frc.util.Gamepad;
-import edu.wpi.first.wpilibj.Compressor;
 
 public class OI {
 	public Gamepad driverGamepad;

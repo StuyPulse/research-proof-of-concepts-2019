@@ -28,7 +28,10 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    operatorGamepad = new Gamepad(RobotMap.OPERATOR_GAMEPAD_PORT);
+    driverGamepad = new Gamepad(RobotMap.DRIVER_GAMEPAD_PORT);
     compressor = new Compressor(0);
+
   }
 
   @Override
@@ -58,16 +61,28 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //Press the right trigger of the gamepad to enable the compressor.
-    if(operatorGamepad.getRawRightTrigger()) {
+    //if(driverGamepad.getRawRightBumper()) {
       compressor.setClosedLoopControl(true);
-    }
+      compressor.start();
+     //System.out.println("Right working");
+     System.out.println("Compressor Drive Current too high: " + compressor.getCompressorCurrentTooHighFault());
+     System.out.println("Compressor Current too high: " + compressor.getCompressorCurrentTooHighStickyFault());
+     System.out.println("Compressor not connected: " + compressor.getCompressorNotConnectedFault());
+     System.out.println("Compressor (sticky) not connected: " + compressor.getCompressorNotConnectedStickyFault());
+     System.out.println("Compressor shorted: " + compressor.getCompressorShortedFault());
+     System.out.println("Compressor sticky connected: " + compressor.getCompressorShortedStickyFault());
+
+    //}
+    //System.out.println(driverGamepad.getRawRightBumper());
     //Press the left trigger of the gamepad to disable the compressor.
-    if(operatorGamepad.getRawLeftTrigger()) {
-      compressor.setClosedLoopControl(false);
-    }
+    //if(driverGamepad.getRawLeftBumper()) {
+      //compressor.setClosedLoopControl(false);
+      //compressor.stop();
+      //System.out.println("left working");
+    //}
     //Prints out a message to show the status of the compressor.
-    System.out.println("Status of the Compressor currently: " + compressor.enabled());
-    System.out.println("Pressure Switch Value" + compressor.getPressureSwitchValue());
+    System.out.println("Status of the Compressor: " + compressor.enabled());
+    System.out.println("Pressure Switch Value " + compressor.getPressureSwitchValue());
   }
 
   @Override
