@@ -57,6 +57,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    //Press the right trigger of the gamepad to enable the compressor.
+    if(operatorGamepad.getRawRightTrigger()) {
+      compressor.setClosedLoopControl(true);
+    }
+    //Press the left trigger of the gamepad to disable the compressor.
+    if(operatorGamepad.getRawLeftTrigger()) {
+      compressor.setClosedLoopControl(false);
+    }
+    //Prints out a message to show the status of the compressor.
+    System.out.println("Status of the Compressor currently: " + compressor.enabled());
+    System.out.println("Pressure Switch Value" + compressor.getPressureSwitchValue());
   }
 
   @Override
