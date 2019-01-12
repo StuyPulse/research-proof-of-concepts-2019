@@ -17,7 +17,7 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 	1. Robot moves with NEOS
 	2. PID tuning with NEOS
 - Camera View (Optimal Quality + Bandwidth Restrictions) (Winston, Timothy)
-	- Nicky, Fahad
+	- Nicky, Fahad, Mo
 	- **Goals:**
 	1. Successfully broadcast video feed to DriverStation
 	2. Find the equilibrium point between high quality and low lag
