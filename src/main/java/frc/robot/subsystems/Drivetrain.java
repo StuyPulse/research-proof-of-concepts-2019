@@ -76,6 +76,12 @@ public class Drivetrain extends Subsystem {
   public void stop(){
     differentialDrive.tankDrive(0, 0);
   }
+  public int getLeftEnocderTicks(){
+    return (int) Math.floor(leftEncoder.getPosition());
+  }
+  public int getRightEnocderTicks(){
+    return (int) Math.floor(rightEncoder.getPosition());
+  }
   public double getGyroAngle() {
     return navX.getAngle();
   }
