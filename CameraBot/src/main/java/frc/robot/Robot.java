@@ -10,14 +10,20 @@ package frc.robot;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.SendableCameraWrapper;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.utils.Gamepad;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,10 +33,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
+  private WPI_TalonSRX leftTopMotor = new WPI_TalonSRX(1);
+  private WPI_TalonSRX rightTopMotor = new WPI_TalonSRX(3);
+  private WPI_TalonSRX leftBottomMotor = new WPI_TalonSRX(2);
+  private WPI_TalonSRX rightBottomMotor = new WPI_TalonSRX(4);
+
+  private Gamepad driverGamepad = new Gamepad(0);
+
+  private DifferentialDrive differentialDrive;
+
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
 
   private void updateSmartDashboard() {
     Map<String, Object> cameraStreamProperties = new HashMap<>();
@@ -52,8 +68,20 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     updateSmartDashboard();
-  }
+    leftTopMotor.setNeutralMode(NeutralMode.Brake);
+    rightTopMotor.setNeutralMode(NeutralMode.Brake);
+    leftBottomMotor.setNeutralMode(NeutralMode.Brake);
+    rightBottomMotor.setNeutralMode(NeutralMode.Brake);
 
+    leftTopMotor.setInverted(true);
+    rightTopMotor.setInverted(true);
+    leftBottomMotor.setInverted(true);
+    rightBottomMotor.setInverted(true);
+
+    differentialDrive = new DifferentialDrive(leftTopMotor, rightTopMotor);
+
+    CameraServer.getInstance().startAutomaticCapture();
+  }
   /**
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
@@ -105,6 +133,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    double rightTrigger = driverGamepad.getRawRightTriggerAxis();
+    double leftTrigger = driverGamepad.getRawLeftTriggerAxis();
+
+    //Values Used for Curvature Drive
+    double rightTriggerSquared = rightTrigger * Math.abs(rightTrigger);
+    double leftTriggerSquared = leftTrigger * Math.abs(leftTrigger);
+    double leftJoystickX = driverGamepad.getLeftX();
+
+    if (Math.abs(rightTrigger + leftTrigger) > 0.05) {
+      differentialDrive.curvatureDrive(rightTriggerSquared - leftTriggerSquared, leftJoystickX, false);
+    } else {
+      differentialDrive.curvatureDrive(rightTriggerSquared - leftTriggerSquared, leftJoystickX, true);
+    } 
   }
 
   /**
