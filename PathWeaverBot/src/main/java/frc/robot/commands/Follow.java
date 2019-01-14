@@ -30,16 +30,16 @@ public class Follow extends Command {
 
 	Notifier profileProcessor; 
 	double dt; 
-  public Follow(String nameOfPath, double dt) {
+  public Follow(String leftFile, Stirng rightFile) {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.drivetrain);
-    leftCSV = new File("/home/lvuser/deploy/" + nameOfPath + "_left_Jaci.csv");
-    rightCSV = new File("/home/lvuser/deploy/" + nameOfPath + "_right_Jaci.csv");
+    leftCSV = new File("/home/lvuser/deploy/" + leftFile + ".csv");
+    rightCSV = new File("/home/lvuser/deploy/" + rightFile + ".csv");
     leftTraj = Pathfinder.readFromCSV(leftCSV);
     rightTraj = Pathfinder.readFromCSV(rightCSV);
     //System.out.println("CSV has been locked and loaded"); 
     profileProcessor = new Notifier(new RunProfile());
-    this.dt = dt; 
+    dt = leftTraj.get(0).dt; 
   }
 
   // Called just before this Command runs the first time
@@ -65,12 +65,7 @@ public class Follow extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(leftFollower.isFinished() && rightFollower.isFinished()){
-      //System.out.println("Path has finished");
-      return true; 
-    }
-    return false; 
-    
+    return leftFollower.isFinished() && rightFollower.isFinished();
   }
 
   // Called once after isFinished returns true
@@ -84,8 +79,7 @@ public class Follow extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    profileProcessor.stop();
-    Robot.drivetrain.stop();
+    end();
   }
   class RunProfile implements java.lang.Runnable {
     int segmentNumber = 0; 
