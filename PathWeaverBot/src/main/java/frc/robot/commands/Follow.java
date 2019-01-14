@@ -83,10 +83,10 @@ public class Follow extends Command {
   }
   class RunProfile implements java.lang.Runnable {
     int segmentNumber = 0; 
-  @Override
-  public void run() {
-    double leftOutput = leftFollower.calculate((int) Robot.drivetrain.getLeftEnocderTicks());
-      double rightOutput = rightFollower.calculate((int) Robot.drivetrain.getRightEnocderTicks());
+    @Override
+    public void run() {
+      double leftOutput = leftFollower.calculate((int) Robot.drivetrain.getLeftEncoderTicks());
+      double rightOutput = rightFollower.calculate((int) Robot.drivetrain.getRightEncoderTicks());
       double gyroHeading = Robot.drivetrain.getGyroAngle();
       double desiredHeading = Pathfinder.r2d(leftFollower.getHeading());
       //Pathfinder is counter-clockwise while gyro is clockwise so gyro heading is added
@@ -96,6 +96,6 @@ public class Follow extends Command {
       Robot.drivetrain.tankDrive(leftOutput + turn, rightOutput - turn);
       //System.out.println(segmentNumber + "-Left Power: " + (leftOutput + turn) + " Right Power: " + (rightOutput - turn));
       segmentNumber++; 
-  }
+    }
   }
 }
