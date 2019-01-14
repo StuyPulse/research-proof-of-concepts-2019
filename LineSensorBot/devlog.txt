@@ -1,0 +1,31 @@
+POC - Line Sensors
+Members - Jincheng Zhang, Cynthia Or, Declan Stacy,  Shirley Zheng, Sandy Tan
+
+     _            _             
+  _| | ____   | | __   __ _ 
+ / _` |/ _ \ \ / / |/ _ \ / _` |
+| (| |  __/\ V /| | () | (_| |
+ \__,_|\___| \_/ |_|\___/ \__, |
+                          |___/ 
+-----------------------------------------------------------------
+Shirley Zheng 1/14 
+=================================================================
+I learned how to navigate through the repository and how to 
+change directories, and created instances of LineSensor. 
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+Jincheng Zhang 1/14
+=================================================================
+I pushed the updated code to github. Encountered some minor push 
+problems that were fixed quickly. Learned how to make classes and 
+subsystems on VSCode.
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+Declan Stacy 1/14
+=================================================================
+Declan created LineSensor class that extended DigitalOutput. Had 
+issues with using super();, solved by adding in an arugment with 
+help from Bryan Lai. 
+-----------------------------------------------------------------
