@@ -6,9 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,7 +21,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-  AnalogInput lineSensor = new AnalogInput(0);
+  LineSensor lineSensor = new LineSensor(0);
+  WPI_TalonSRX leftTopMotor = new WPI_TalonSRX(-1);
+  WPI_TalonSRX leftBottomMotor = new WPI_TalonSRX(-1);
+  WPI_TalonSRX rightTopMotor = new WPI_TalonSRX(-1);
+  WPI_TalonSRX rightBottomMotor = new WPI_TalonSRX(-1);
+
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -33,6 +38,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    leftTopMotor.setNeutralMode(NeutralMode.Brake);
+    leftBottomMotor.setNeutralMode(NeutralMode.Brake);
+    rightTopMotor.setNeutralMode(NeutralMode.Brake);
+    rightBottomMotor.setNeutralMode(NeutralMode.Brake);
+
+    rightTopMotor.setInverted(true);
+    rightBottomMotor.setInverted(true);
+
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -71,6 +84,7 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during autonomous.
    */
+
   @Override
   public void autonomousPeriodic() {
     switch (m_autoSelected) {
@@ -89,7 +103,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    System.out.println(lineSensor.getVoltage());
   }
 
   /**
@@ -97,5 +110,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+
   }
 }
