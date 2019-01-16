@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
   private WPI_TalonSRX rightTopMotor = new WPI_TalonSRX(3);
   private WPI_TalonSRX leftBottomMotor = new WPI_TalonSRX(2);
   private WPI_TalonSRX rightBottomMotor = new WPI_TalonSRX(4);
-
+  private UsbCamera usbCamera;
   private Gamepad driverGamepad = new Gamepad(0);
 
   private DifferentialDrive differentialDrive;
@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    updateSmartDashboard();
+    //updateSmartDashboard();
     leftTopMotor.setNeutralMode(NeutralMode.Brake);
     rightTopMotor.setNeutralMode(NeutralMode.Brake);
     leftBottomMotor.setNeutralMode(NeutralMode.Brake);
@@ -79,8 +79,10 @@ public class Robot extends TimedRobot {
     rightBottomMotor.setInverted(true);
 
     differentialDrive = new DifferentialDrive(leftTopMotor, rightTopMotor);
+    //usbCamera = new UsbCamera("hi", 0);
+    //CameraServer.getInstance().startAutomaticCapture(usbCamera);
+    CameraServer.getInstance().startAutomaticCapture(0);
 
-    CameraServer.getInstance().startAutomaticCapture();
   }
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -145,7 +147,7 @@ public class Robot extends TimedRobot {
       differentialDrive.curvatureDrive(rightTriggerSquared - leftTriggerSquared, leftJoystickX, false);
     } else {
       differentialDrive.curvatureDrive(rightTriggerSquared - leftTriggerSquared, leftJoystickX, true);
-    } 
+    }
   }
 
   /**
