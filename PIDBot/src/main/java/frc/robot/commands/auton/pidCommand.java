@@ -11,9 +11,9 @@ public class pidCommand extends PIDCommand {
 
     public pidCommand(double p, double i, double d, double target){
         super(p, i, d);
-        setSetpoint(target);
+        this.target = target / Robot.drivetrain.DRIVETRAIN_RAW_MULTIPLIER;
+        setSetpoint(this.target);
         pidController = getPIDController(); 
-        target = this.target;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class pidCommand extends PIDCommand {
 
     @Override
     protected boolean isFinished() {
-        return(Math.abs(target - Robot.drivetrain.getMaxEncoder()) < .1) ;
+        return(Math.abs(target - Robot.drivetrain.getMaxEncoder()) <= .1) ;
     }
 
     @Override

@@ -15,7 +15,7 @@ public class Drivetrain extends Subsystem {
 
     private static final double DRIVETRAIN_EMPIRICAL_RAW_MULTIPLIER = (63.7 / 63.0) * 61.1 / ((463.544 + 461.814) / 2.0);
     private static final double DRIVETRAIN_ENCODERS_INCHES_PER_REVOLUTION = Math.PI * 6.0;
-    private static final double DRIVETRAIN_RAW_MULTIPLIER = DRIVETRAIN_EMPIRICAL_RAW_MULTIPLIER *DRIVETRAIN_ENCODERS_INCHES_PER_REVOLUTION / 1024;
+    public static final double DRIVETRAIN_RAW_MULTIPLIER = DRIVETRAIN_EMPIRICAL_RAW_MULTIPLIER * DRIVETRAIN_ENCODERS_INCHES_PER_REVOLUTION / 1024;
 
     private CANSparkMax leftTopMotor,
                         leftMiddleMotor,
