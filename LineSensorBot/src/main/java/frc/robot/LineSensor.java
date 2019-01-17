@@ -31,7 +31,7 @@ public class LineSensor extends DigitalInput{
       SensorUtil.checkDigitalChannel(channel);
       m_channel = channel;
   
-      m_handle = DIOJNI.initializeDIOPort(HAL.getPort((byte) channel), true);
+     m_handle = DIOJNI.initializeDIOPort(HAL.getPort((byte) channel), true);
   
       HAL.report(tResourceType.kResourceType_DigitalInput, channel);
       setName("DigitalInput", channel);
@@ -53,6 +53,7 @@ public class LineSensor extends DigitalInput{
      *
      * @return the status of the digital input
      */
+    @Override
     public boolean get() {
       return DIOJNI.getDIO(m_handle);
     }

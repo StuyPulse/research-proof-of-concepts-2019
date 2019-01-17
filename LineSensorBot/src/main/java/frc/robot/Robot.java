@@ -9,6 +9,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,16 +22,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-  LineSensor lineSensor = new LineSensor(0);
-  WPI_TalonSRX leftTopMotor = new WPI_TalonSRX(-1);
-  WPI_TalonSRX leftBottomMotor = new WPI_TalonSRX(-1);
-  WPI_TalonSRX rightTopMotor = new WPI_TalonSRX(-1);
-  WPI_TalonSRX rightBottomMotor = new WPI_TalonSRX(-1);
+  //LineSensor leftLineSensor = new LineSensor(0);
+  DigitalInput leftLineSensor = new DigitalInput(2);
+ // LineSensor rightLineSensor = new LineSensor(0);
+  WPI_TalonSRX leftTopMotor = new WPI_TalonSRX(1);
+  WPI_TalonSRX leftBottomMotor = new WPI_TalonSRX(2);
+  WPI_TalonSRX rightTopMotor = new WPI_TalonSRX(3);
+  WPI_TalonSRX rightBottomMotor = new WPI_TalonSRX(4);
 
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private Boolean stop; 
 
   /**
    * This function is run when the robot is first started up and should be
@@ -42,9 +46,9 @@ public class Robot extends TimedRobot {
     leftBottomMotor.setNeutralMode(NeutralMode.Brake);
     rightTopMotor.setNeutralMode(NeutralMode.Brake);
     rightBottomMotor.setNeutralMode(NeutralMode.Brake);
-
-    rightTopMotor.setInverted(true);
-    rightBottomMotor.setInverted(true);
+    
+    leftTopMotor.setInverted(true);
+    leftBottomMotor.setInverted(true);
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -79,6 +83,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+   stop = false; 
   }
 
   /**
@@ -87,15 +92,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
+    System.out.println(leftLineSensor.get());
+    if(leftLineSensor.get()){
+      stop = true;
     }
+    if(! stop){
+      leftTopMotor.set(.5); 
+      rightTopMotor.set(.5); 
+      leftBottomMotor.set(.5); 
+      rightBottomMotor.set(.5); 
+    }
+    else{
+      leftTopMotor.set(0); 
+      rightTopMotor.set(0); 
+      leftBottomMotor.set(0); 
+      rightBottomMotor.set(0); 
+    }
+
   }
 
   /**
@@ -103,6 +116,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    System.out.println(leftLineSensor.get());
   }
 
   /**
