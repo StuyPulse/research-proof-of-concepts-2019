@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.utils.Gamepad;
+import frc.utils.Gamepad.GamepadSwitchMode;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,7 +39,7 @@ public class Robot extends TimedRobot {
   private WPI_TalonSRX leftBottomMotor = new WPI_TalonSRX(2);
   private WPI_TalonSRX rightBottomMotor = new WPI_TalonSRX(4);
   private UsbCamera usbCamera;
-  private Gamepad driverGamepad = new Gamepad(0);
+  private Gamepad driverGamepad = new Gamepad(0, GamepadSwitchMode.SWITCH_X);
 
   private DifferentialDrive differentialDrive;
 
@@ -77,6 +78,9 @@ public class Robot extends TimedRobot {
     rightTopMotor.setInverted(true);
     leftBottomMotor.setInverted(true);
     rightBottomMotor.setInverted(true);
+
+    leftBottomMotor.follow(leftTopMotor);
+    rightBottomMotor.follow(rightTopMotor);
 
     differentialDrive = new DifferentialDrive(leftTopMotor, rightTopMotor);
     //usbCamera = new UsbCamera("hi", 0);
@@ -137,17 +141,19 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     double rightTrigger = driverGamepad.getRawRightTriggerAxis();
     double leftTrigger = driverGamepad.getRawLeftTriggerAxis();
-
     //Values Used for Curvature Drive
     double rightTriggerSquared = rightTrigger * Math.abs(rightTrigger);
     double leftTriggerSquared = leftTrigger * Math.abs(leftTrigger);
     double leftJoystickX = driverGamepad.getLeftX();
-
+    //System.out.println("hi");
     if (Math.abs(rightTrigger + leftTrigger) > 0.05) {
       differentialDrive.curvatureDrive(rightTriggerSquared - leftTriggerSquared, leftJoystickX, false);
     } else {
       differentialDrive.curvatureDrive(rightTriggerSquared - leftTriggerSquared, leftJoystickX, true);
     }
+    /*double leftJoystickY = driverGamepad.getLeftY();
+    double rightJoystickY = driverGamepad.getRightY();
+    differentialDrive.tankDrive(leftJoystickY, rightJoystickY);*/
   }
 
   /**
