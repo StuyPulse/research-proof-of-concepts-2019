@@ -19,3 +19,7 @@ Tahsin helped me create a PID Command that utilizes the Sparks.
 ### Lei Lin 01/18/19
 --------------------------------
 Lei, Ayan, and Randy helped create the DriveStraightPIDCommand, to which Pak edited and removed the original PID command and integrated it into a new command. We then began working on RotaeAnglePIDCommand.
+
+### Pak Ming Lau 01/22/19
+--------------------------------
+Pak finished the RotateAnglePIDCommand

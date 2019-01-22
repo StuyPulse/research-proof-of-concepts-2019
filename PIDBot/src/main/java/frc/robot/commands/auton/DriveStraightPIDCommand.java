@@ -35,6 +35,8 @@ public class DriveStraightPIDCommand extends PIDCommand{
     }
 
     protected void execute(){
+        speedPIDController.reset();
+        speedPIDController.enable();
         usePIDOutput(returnPIDInput());
     }
 

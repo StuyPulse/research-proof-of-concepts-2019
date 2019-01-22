@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -30,6 +31,8 @@ public class Drivetrain extends Subsystem {
     private DifferentialDrive differentialDrive;
 
     public static AHRS navX;
+
+    private Solenoid gearShift;
 
     public Drivetrain() {
         leftTopMotor = new CANSparkMax(3, MotorType.kBrushless);
@@ -64,6 +67,8 @@ public class Drivetrain extends Subsystem {
         differentialDrive = new DifferentialDrive(leftBottomMotor, rightBottomMotor);
 
         navX = new AHRS(SPI.Port.kMXP);
+
+        gearShift = new Solenoid(7);
     }
 
     public double getMaxEncoder() {
@@ -103,6 +108,18 @@ public class Drivetrain extends Subsystem {
 
     public double getGyroAngle() {
         return navX.getAngle();
+    }
+
+    public void resetGyro() {
+        navX.reset();
+    }
+
+    public void highGearShift() {
+        gearShift.set(false);
+    }
+
+    public void lowGearShift() {
+        gearShift.set(true);
     }
 
 	@Override

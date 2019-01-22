@@ -9,7 +9,7 @@ import frc.robot.Robot;
 
 public abstract class RotateAnglePIDCommand extends PIDCommand {
 
-    PIDController rotatePIDController; 
+    PIDController gyroPIDController; 
     double angle;
     double gyroPIDOutput;
 
@@ -20,21 +20,39 @@ public abstract class RotateAnglePIDCommand extends PIDCommand {
 
     @Override
     protected double returnPIDInput() {
-        return rotatePIDController.get();
+        return gyroPIDController.get();
     }
 
     @Override
     protected void usePIDOutput(double output) {
+        Robot.drivetrain.tankDrive(output, -output);
     }
 
     @Override 
     protected void initialize() {
-        
+        gyroPIDController = new PIDController (0, 0, 0, new GyroPIDSource(), new GyroPIDOutput());
+        gyroPIDController.setSetpoint(angle);
+        gyroPIDController.enable();
+        usePIDOutput(returnPIDInput());
+    }
+
+    @Override
+    protected void execute() {
+        gyroPIDController.reset();
+        gyroPIDController.enable();
+
     }
 
     @Override
 	protected boolean isFinished() {
-		return false;
+		return angle == Robot.drivetrain.getGyroAngle();
+    }
+
+    @Override
+    protected void end() {
+        Robot.drivetrain.stop();
+        gyroPIDController.setPID(0, 0, 0);
+        gyroPIDController.disable();
     }
 
     protected abstract double getAngle();
