@@ -16,7 +16,7 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 	- **Goals:**
 	1. Robot moves with NEOS
 	2. PID tuning with NEOS
-- Camera View (Optimal Quality + Bandwidth Restrictions) (Winston, Timothy)
+- DONE Camera View (Optimal Quality + Bandwidth Restrictions) (Winston, Timothy)
 	- Nicky, Fahad, Mo
 	- **Goals:**
 	1. Successfully broadcast video feed to DriverStation
@@ -34,17 +34,17 @@ Research and Proof of Concepts for 2019's FIRST® Robotics Competition Deep Spac
 	1. Detect Lines (White on Grey Carpet)
 	2. Figure out optimal line sensor placement along with alignment logic
 	3. Optimize the line sensor code to get the robot moving at a fast speed and still stop at a line while sensing it.
-- Running Autons During/After the Sandstorm (Helena)
+- Running Autons During/After the Sandstorm (Winston)
 	- Joshua, Rayat, Miguel
 	- **Goals:**
 	1. Running autons for 15 sec with 2019 code
 	2. Running autons > 15 sec
-- Teleop Integration into Auton (Helena)
+- Teleop Integration into Auton (Winston)
 	- Joshua, Rayat, Miguel
 	- **Goals:**
 	1. Run Autonomated commands in teleop with push of a button
 	2. Operate in sandstorm period
-- Motion Profiling with PathWeaver (Tahsin, Kevin)
+- DONE Motion Profiling with PathWeaver (Tahsin, Kevin)
 	- Some of PID tuning group later
 	- **Goals:**
 	1. Create paths + run paths for autons Blay wants
