@@ -22,13 +22,13 @@ import frc.robot.subsystems.Drivetrain;
 public class Robot extends TimedRobot {
 
   public static Drivetrain drivetrain;
-
+  SendableChooser<Double> PIDChoooser = new SendableChooser<>();
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  /**
+    /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
@@ -96,7 +96,19 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during test mode.
    */
-  @Override
+  
+  private void initSmartDashboard(){
+    SmartDashboard.putNumber("DriveStraight-P", 0);
+    SmartDashboard.putNumber("DriveStraight-I", 0);
+    SmartDashboard.putNumber("DriveStraight-D", 0);
+    
+    SmartDashboard.putNumber("Rotate-P", 0);
+    SmartDashboard.putNumber("Rotate-I", 0);
+    SmartDashboard.putNumber("Rotate-D", 0);
+   
+  }
+  
+   @Override
   public void testPeriodic() {
   }
 }
