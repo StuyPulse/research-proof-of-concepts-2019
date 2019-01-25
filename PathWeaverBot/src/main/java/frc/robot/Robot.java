@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
-
+import frc.util.Gamepad;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   public static Drivetrain drivetrain; 
-
+  public Gamepad Driver = new Gamepad(0);
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -91,6 +91,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    double speed = 0;
+    if(Driver.getRawRightTrigger() || Driver.getRawLeftTrigger()){
+      if(Driver.getRawRightTrigger()){
+        speed = 1;
+      }else{
+        speed = -1;
+      }
+    }
+    drivetrain.curvatureDrive(speed,Math.pow(Driver.getLeftX(), 3));
   }
 
   /**

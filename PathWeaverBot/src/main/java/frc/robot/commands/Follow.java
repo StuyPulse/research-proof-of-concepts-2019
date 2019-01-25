@@ -30,7 +30,7 @@ public class Follow extends Command {
 
 	Notifier profileProcessor; 
 	double dt; 
-  public Follow(String leftFile, Stirng rightFile) {
+  public Follow(String leftFile, String rightFile) {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.drivetrain);
     leftCSV = new File("/home/lvuser/deploy/" + leftFile + ".csv");

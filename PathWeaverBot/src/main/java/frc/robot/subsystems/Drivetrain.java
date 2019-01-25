@@ -73,14 +73,26 @@ public class Drivetrain extends Subsystem {
   public void tankDrive(double left, double right){
     differentialDrive.tankDrive(left, right);
   }
+  public void curvatureDrive(double speed, double angle){
+    differentialDrive.curvatureDrive(speed, angle,false);
+  }
   public void stop(){
     differentialDrive.tankDrive(0, 0);
   }
-  public double getLeftEnocderTicks(){
+  public double getLeftEncoderTicks(){
     return leftEncoder.getPosition();
   }
-  public double getRightEnocderTicks(){
+  public double getRightEncoderTicks(){
     return rightEncoder.getPosition();
+  }
+  public double getLeftDistance(){
+    return leftEncoder.getPosition()*6*Math.PI;
+  }
+  public double getRightDistance(){
+    return rightEncoder.getPosition()*6*Math.PI;
+  }
+  public double getDistance(){
+    return Math.max(getLeftDistance(),getRightDistance());
   }
   public double getGyroAngle() {
     return navX.getAngle();
