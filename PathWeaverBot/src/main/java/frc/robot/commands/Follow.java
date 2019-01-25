@@ -50,8 +50,8 @@ public class Follow extends Command {
     leftFollower.reset();
     rightFollower.reset();
     //Wheel diameter in feet
-    leftFollower.configureEncoder((int) Robot.drivetrain.getLeftEnocderTicks(), RobotMap.DRIVETRAIN_ENCODER_TICKS_PER_REVOLUTION, RobotMap.DRIVETRAIN_WHEEL_DIAMETER / 12);
-    rightFollower.configureEncoder((int) Robot.drivetrain.getRightEnocderTicks(), RobotMap.DRIVETRAIN_ENCODER_TICKS_PER_REVOLUTION, RobotMap.DRIVETRAIN_WHEEL_DIAMETER / 12);
+    leftFollower.configureEncoder((int) Robot.drivetrain.getLeftEncoderTicks(), RobotMap.DRIVETRAIN_ENCODER_TICKS_PER_REVOLUTION, RobotMap.DRIVETRAIN_WHEEL_DIAMETER / 12);
+    rightFollower.configureEncoder((int) Robot.drivetrain.getRightEncoderTicks(), RobotMap.DRIVETRAIN_ENCODER_TICKS_PER_REVOLUTION, RobotMap.DRIVETRAIN_WHEEL_DIAMETER / 12);
     leftFollower.configurePIDVA(SmartDashboard.getNumber("kp", 0.0), SmartDashboard.getNumber("ki", 0), SmartDashboard.getNumber("kd", 0.0), RobotMap.kv, SmartDashboard.getNumber("ka", 0));
     rightFollower.configurePIDVA(SmartDashboard.getNumber("kp", 0.0), SmartDashboard.getNumber("ki", 0), SmartDashboard.getNumber("kd", 0.0), RobotMap.kv, SmartDashboard.getNumber("ka", 0));
     profileProcessor.startPeriodic(dt);
