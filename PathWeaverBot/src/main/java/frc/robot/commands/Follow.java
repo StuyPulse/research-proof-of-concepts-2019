@@ -87,7 +87,7 @@ public class Follow extends Command {
     public void run() {
       double leftOutput = leftFollower.calculate((int) Robot.drivetrain.getLeftEncoderTicks());
       double rightOutput = rightFollower.calculate((int) Robot.drivetrain.getRightEncoderTicks());
-      double gyroHeading = Robot.drivetrain.getGyroAngle();
+      double gyroHeading = 0;
       double desiredHeading = Pathfinder.r2d(leftFollower.getHeading());
       //Pathfinder is counter-clockwise while gyro is clockwise so gyro heading is added
       double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading + gyroHeading);

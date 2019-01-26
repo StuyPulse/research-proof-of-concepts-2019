@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.*;
@@ -31,13 +32,15 @@ public class Drivetrain extends Subsystem {
   private CANEncoder leftEncoder;
   private CANEncoder rightEncoder;
   private DifferentialDrive differentialDrive;
+  private Solenoid gearShift;
   public Drivetrain() {
-    leftTopMotor = new CANSparkMax(3, MotorType.kBrushless);
-    rightTopMotor = new CANSparkMax(6, MotorType.kBrushless);
-    leftMiddleMotor = new CANSparkMax(2, MotorType.kBrushless);
-    rightMiddleMotor = new CANSparkMax(5, MotorType.kBrushless);
-    leftBottomMotor = new CANSparkMax(3, MotorType.kBrushless);
-    rightBottomMotor = new CANSparkMax(4, MotorType.kBrushless);
+    gearShift = new Solenoid(7);
+    leftTopMotor = new CANSparkMax(0, MotorType.kBrushless);
+    rightTopMotor = new CANSparkMax(3, MotorType.kBrushless);
+    leftMiddleMotor = new CANSparkMax(1, MotorType.kBrushless);
+    rightMiddleMotor = new CANSparkMax(4, MotorType.kBrushless);
+    leftBottomMotor = new CANSparkMax(2, MotorType.kBrushless);
+    rightBottomMotor = new CANSparkMax(5, MotorType.kBrushless);
     
     leftMiddleMotor.follow(leftBottomMotor);
     leftTopMotor.follow(leftBottomMotor);
@@ -61,7 +64,7 @@ public class Drivetrain extends Subsystem {
     rightMiddleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     rightBottomMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-    navX = new AHRS(SPI.Port.kMXP);
+    //navX = new AHRS(SPI.Port.kMXP);
     differentialDrive = new DifferentialDrive(leftBottomMotor, rightBottomMotor);
   }
 
@@ -73,8 +76,11 @@ public class Drivetrain extends Subsystem {
   public void tankDrive(double left, double right){
     differentialDrive.tankDrive(left, right);
   }
-  public void curvatureDrive(double speed, double angle){
-    differentialDrive.curvatureDrive(speed, angle,false);
+  public void gearShift(){
+      gearShift.set(!(gearShift.get()));
+  }
+  public void curvatureDrive(double speed, double angle, boolean turn){
+    differentialDrive.curvatureDrive(speed, angle, turn);
   }
   public void stop(){
     differentialDrive.tankDrive(0, 0);
@@ -94,7 +100,5 @@ public class Drivetrain extends Subsystem {
   public double getDistance(){
     return Math.max(getLeftDistance(),getRightDistance());
   }
-  public double getGyroAngle() {
-    return navX.getAngle();
-  }
+
 }
