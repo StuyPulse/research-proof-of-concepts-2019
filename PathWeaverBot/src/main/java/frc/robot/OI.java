@@ -7,7 +7,8 @@
 
 package frc.robot;
 
-import frc.robot.commands.GearShiftCommand;
+import frc.robot.commands.DrivetrainHighGearCommand;
+import frc.robot.commands.DrivetrainLowGearCommand;
 import frc.util.Gamepad;
 import frc.util.Gamepad.GamepadSwitchMode;
 
@@ -18,10 +19,10 @@ public class OI {
     public Gamepad driverGamepad;
     public OI(){
         driverGamepad = new Gamepad(0, GamepadSwitchMode.SWITCH_X);
-        System.out.println("l");
         System.out.println(driverGamepad.getDPadDown());
 
-        driverGamepad.getDPadDown().whenPressed(new GearShiftCommand());
+        driverGamepad.getBottomButton().whenPressed(new DrivetrainLowGearCommand());
+        driverGamepad.getBottomButton().whenReleased(new DrivetrainHighGearCommand());
     }
 
 }
