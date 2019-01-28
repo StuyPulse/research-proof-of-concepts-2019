@@ -7,17 +7,9 @@
 
 package frc.robot;
 
-import frc.util.Gamepad.GamepadSwitchMode;
-
-import java.sql.Driver;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
-import frc.util.Gamepad;
 import frc.robot.OI;
-import frc.robot.commands.GearShiftCommand;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -26,11 +18,6 @@ import frc.robot.commands.GearShiftCommand;
  * project.
  */
 public class Robot extends TimedRobot {
-    private static final String kDefaultAuto = "Default";
-    private static final String kCustomAuto = "My Auto";
-    private String m_autoSelected;
-    private final SendableChooser<String> m_chooser = new SendableChooser<>();
-    public static Gamepad Driver;
     public static Drivetrain drivetrain;
     public static OI oi;
 
@@ -40,10 +27,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-        m_chooser.addOption("My Auto", kCustomAuto);
-        SmartDashboard.putData("Auto choices", m_chooser);
-
         drivetrain = new Drivetrain();
         oi = new OI();
         //Driver = new Gamepad(0, GamepadSwitchMode.SWITCH_X);
@@ -76,9 +59,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_autoSelected = m_chooser.getSelected();
-        // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-        System.out.println("Auto selected: " + m_autoSelected);
     }
 
     /**
@@ -86,15 +66,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        switch (m_autoSelected) {
-        case kCustomAuto:
-            // Put custom auto code here
-            break;
-        case kDefaultAuto:
-        default:
-            // Put default auto code here
-            break;
-        }
     }
 
     /**
@@ -127,6 +98,11 @@ public class Robot extends TimedRobot {
             Robot.drivetrain.curvatureDrive(rightTriggerSquared - leftTriggerSquared, leftJoystickX, false);
         } else {
             Robot.drivetrain.curvatureDrive(rightTriggerSquared - leftTriggerSquared, leftJoystickX, true);
+        }
+        if(oi.driverGamepad.getRawBottomButton()) {
+            drivetrain.lowGearShift();
+        } else {
+            drivetrain.highGearShift();
         }
         // System.out.println("TOTAL DISTANCE: " + drivetrain.getDistance());
         // System.out.println("LeftBottom: " + drivetrain.getLeftDistance());

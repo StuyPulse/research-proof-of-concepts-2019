@@ -57,10 +57,10 @@ public class Drivetrain extends Subsystem {
     leftEncoder = leftBottomMotor.getEncoder();
     rightEncoder = rightBottomMotor.getEncoder();
     /// Brake Mode
-    leftTopMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    leftTopMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     leftMiddleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     leftBottomMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-    rightTopMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    rightTopMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     rightMiddleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     rightBottomMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
@@ -100,5 +100,10 @@ public class Drivetrain extends Subsystem {
   public double getDistance(){
     return Math.max(getLeftDistance(),getRightDistance());
   }
-
+  public void lowGearShift() {
+    gearShift.set(true);
+  }
+  public void highGearShift() {
+    gearShift.set(false);
+  }
 }

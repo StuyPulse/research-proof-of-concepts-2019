@@ -27,6 +27,7 @@ public class DrivetrainLowGearCommand extends InstantCommand {
   @Override
   protected void initialize() {
     Robot.drivetrain.lowGearShift();
+    System.out.println("Low Gear");
   }
 
 }

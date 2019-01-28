@@ -27,6 +27,7 @@ public class DrivetrainHighGearCommand extends InstantCommand {
   @Override
   protected void initialize() {
     Robot.drivetrain.highGearShift();
+    System.out.println("High Gear");
   }
 
 }
