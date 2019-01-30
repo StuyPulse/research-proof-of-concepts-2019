@@ -23,6 +23,9 @@ public class Robot extends TimedRobot {
   private Gamepad operatorGamepad;
   private Compressor compressor;
 
+  /**
+  * Creates an oi, gamepad, and compressor
+  */
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -58,6 +61,9 @@ public class Robot extends TimedRobot {
     }
   }
 
+  /*
+  * Has compressors constantly updating its status
+  */
   @Override
   public void teleopPeriodic() {
     //Press the right trigger of the gamepad to enable the compressor.

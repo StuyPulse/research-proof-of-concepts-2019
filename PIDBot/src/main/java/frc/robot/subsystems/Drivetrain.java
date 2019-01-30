@@ -6,7 +6,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -32,8 +31,9 @@ public class Drivetrain extends Subsystem {
 
     public static AHRS navX;
 
-    private Solenoid gearShift;
-
+    /*
+    * Constructor for the drivetrain and sets up the motors
+    */
     public Drivetrain() {
         leftTopMotor = new CANSparkMax(3, MotorType.kBrushless);
         leftMiddleMotor = new CANSparkMax(2, MotorType.kBrushless);
@@ -67,10 +67,12 @@ public class Drivetrain extends Subsystem {
         differentialDrive = new DifferentialDrive(leftBottomMotor, rightBottomMotor);
 
         navX = new AHRS(SPI.Port.kMXP);
-
-        gearShift = new Solenoid(7);
     }
 
+    /*
+    * Gets the max encoder distance
+    * @return returns the max encoder distance
+    */
     public double getMaxEncoder() {
         double left = getLeftEncoderDistance();
         double right = getRightEncoderDistance();
@@ -82,44 +84,65 @@ public class Drivetrain extends Subsystem {
         }
     }
 
+    /*
+    * Returns the left encoder distance before factors are applied to it
+    * @return returns raw left encoder distance
+    */
     public double getLeftRawEncoderDistance() {
         return leftEncoder.getPosition();
     }
 
+    /*
+    * Returns the right encoder distance before factors are applied to it
+    * @return returns raw right encoder distance
+    */
     public double getRightRawEncoderDistance() {
         return rightEncoder.getPosition();
     }
 
+    /*
+    * Returns the left encoder distance after factors are applied to it
+    * @return returns raw left encoder distance
+    */
     public double getLeftEncoderDistance() {
         return DRIVETRAIN_RAW_MULTIPLIER * leftEncoder.getPosition();
     }
 
+    /*
+    * Returns the right encoder distance after factors are applied to it
+    * @return returns raw right encoder distance
+    */
     public double getRightEncoderDistance() {
         return DRIVETRAIN_RAW_MULTIPLIER * rightEncoder.getPosition();
     }
 
+    /*
+    * Implements tank drive
+    */
     public void tankDrive (double left, double right) {
         differentialDrive.tankDrive(left, right);
     }
 
+    /*
+    * Makes the drivetrain stop
+    */
     public void stop() {
         differentialDrive.tankDrive(0, 0);
     }
 
+    /*
+    * Returns the gyro angle
+    * @return returns the gyro angle
+    */
     public double getGyroAngle() {
         return navX.getAngle();
     }
 
+    /*
+    * Resets the gyro value to 0
+    */
     public void resetGyro() {
         navX.reset();
-    }
-
-    public void highGearShift() {
-        gearShift.set(false);
-    }
-
-    public void lowGearShift() {
-        gearShift.set(true);
     }
 
 	@Override
