@@ -7,12 +7,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Motor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +28,9 @@ public class Robot extends TimedRobot {
       = new DifferentialDrive(new PWMVictorSPX(0), new PWMVictorSPX(1));
   private final Joystick m_stick = new Joystick(0);
   private final Timer m_timer = new Timer();
-  private Motor m_motor;
+  public static Motor m_motor;
+  public static int threshold;
+  public static DigitalInput yeet = new DigitalInput(0);
 
   /**
    * This function is run when the robot is first started up and should be
@@ -39,8 +43,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putBoolean("Acquirer Has Ball", m_motor.isBallAcquired());
-  }
+    //SmartDashboard.putBoolean("Acquirer Has Ball", m_motor.isBallAcquired());
+    SmartDashboard.putBoolean("Optical Timer", yeet.get());
+    m_motor.move(1.0);
+    //SmartDashboard.putNumber("Value of Thing", m_motor.getOutputCurrent());
+    SmartDashboard.putNumber("Motor Threshold(put Number)", threshold);
+   }
     
   /**
    * This function is run once each time the robot enters autonomous mode.
