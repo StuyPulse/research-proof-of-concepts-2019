@@ -10,6 +10,8 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import org.xml.sax.SAXNotRecognizedException;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -29,9 +31,14 @@ public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
   WPI_TalonSRX test_motor = new WPI_TalonSRX(7);
-  public double raw_distance = test_motor.getSelectedSensorPosition(0);
-  public double abs_raw_distance = Math.abs(raw_distance);
-  public double change_distance = 0.0;
+  double change_distance = 0.0;
+  Long start_time = System.currentTimeMillis();
+  double raw_distance = 0.0;
+  double abs_raw_distance = Math.abs(raw_distance);
+  double start_encoder_value = abs_raw_distance;
+  double base_current_zero_speed = 0.125;
+  //This POC is using ticks
+  double encoder_approach_stall_threshold = 100;
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -118,7 +125,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    test_motor.setSelectedSensorPosition(0,0,100);
+    test_motor.set(ControlMode.PercentOutput,1.0);
+  
   }
 
   /**
@@ -126,31 +134,24 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //System.out.println(abs_raw_distance);
-    double prev = abs_raw_distance;
-    Scheduler.getInstance().run();
-    test_motor.set(ControlMode.PercentOutput,0.2);
-    raw_distance = test_motor.getSelectedSensorPosition(0);
-    abs_raw_distance = Math.abs(raw_distance);
-    System.out.println("Printing Encoder Val Difference:");
-    change_distance = Math.abs(abs_raw_distance - prev);
-    System.out.println(change_distance);
-    //System.out.println(abs_raw_distance);
-    //System.out.println(raw_distance);
-    //SmartDashboard.putNumber("Raw Encoder Value:", raw_distance);
-    System.out.println("Printing Motor Speed");
-    //This method doesnt work
-    System.out.println(Math.abs(test_motor.get()));
-    SmartDashboard.putNumber("Abs Raw Encoder Value:", abs_raw_distance);
-    SmartDashboard.putNumber("Motor Current:",test_motor.getOutputCurrent());
-    SmartDashboard.putBoolean("Motor Stall Status:",isStalled());
-    }
-    public boolean isStalled(){
-      if (test_motor.getOutputCurrent() > 0.0 && change_distance == 0.0){
-        return true;
+    Long current_time = System.currentTimeMillis();
+    Long change_from_start = current_time - start_time;
+   // System.out.println(change_from_start);
+    if (change_from_start > 100){
+      start_time = System.currentTimeMillis();
+      double current_encoder_value = Math.abs(test_motor.getSelectedSensorPosition(0));
+      double change_distance = current_encoder_value - start_encoder_value;
+      SmartDashboard.putNumber("Change In Distance Encoder", change_distance);
+      SmartDashboard.putNumber("Motor Current", test_motor.getOutputCurrent());
+      if (test_motor.getOutputCurrent() > base_current_zero_speed && change_distance <= encoder_approach_stall_threshold){
+        SmartDashboard.putBoolean("Motor Stall Status:",true);
       }
-      return false;
+      else{
+        SmartDashboard.putBoolean("Motor Stall Status:",false);
+      }
+      start_encoder_value = current_encoder_value;
     }
+  }
   /**
    * This function is called periodically during test mode.
    */
