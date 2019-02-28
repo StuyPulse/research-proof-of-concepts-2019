@@ -37,7 +37,8 @@ public class Robot extends TimedRobot {
   double raw_distance = 0.0;
   double abs_raw_distance = Math.abs(raw_distance);
   double start_encoder_value = abs_raw_distance;
-  double base_current_zero_speed = 0.125;
+  //Move the joystick right at the edge of where a motor doesn't move and does move to tune this
+  double base_current = 0.25;
   //This POC is using ticks 
   double encoder_approach_stall_threshold = 130;
   Command m_autonomousCommand;
@@ -149,7 +150,7 @@ public class Robot extends TimedRobot {
       double change_distance = Math.abs(current_encoder_value - start_encoder_value);
       SmartDashboard.putNumber("Change In Distance Encoder", change_distance);
       SmartDashboard.putNumber("Motor Current", test_motor.getOutputCurrent());
-      if (test_motor.getOutputCurrent() > base_current_zero_speed && change_distance <= encoder_approach_stall_threshold){
+      if (test_motor.getOutputCurrent() > base_current && change_distance <= encoder_approach_stall_threshold){
         SmartDashboard.putBoolean("Motor Stall Status:",true);
       }
       else{
