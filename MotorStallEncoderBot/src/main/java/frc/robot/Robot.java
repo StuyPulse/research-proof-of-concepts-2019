@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.util.Gamepad;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,9 +38,10 @@ public class Robot extends TimedRobot {
   double abs_raw_distance = Math.abs(raw_distance);
   double start_encoder_value = abs_raw_distance;
   double base_current_zero_speed = 0.125;
-  //This POC is using ticks
-  double encoder_approach_stall_threshold = 100;
+  //This POC is using ticks 
+  double encoder_approach_stall_threshold = 130;
   Command m_autonomousCommand;
+  Gamepad gamepad = new Gamepad(0);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
@@ -125,7 +127,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    test_motor.set(ControlMode.PercentOutput,1.0);
+   // test_motor.set(ControlMode.PercentOutput,0.05);
   
   }
 
@@ -137,10 +139,14 @@ public class Robot extends TimedRobot {
     Long current_time = System.currentTimeMillis();
     Long change_from_start = current_time - start_time;
    // System.out.println(change_from_start);
+    if (Math.abs(gamepad.getLeftY()) > 0){
+      test_motor.set(ControlMode.PercentOutput,Math.pow(gamepad.getLeftY(),3));
+    }
     if (change_from_start > 100){
       start_time = System.currentTimeMillis();
+      //current_encoder_value needs to be replaced with distance instead
       double current_encoder_value = Math.abs(test_motor.getSelectedSensorPosition(0));
-      double change_distance = current_encoder_value - start_encoder_value;
+      double change_distance = Math.abs(current_encoder_value - start_encoder_value);
       SmartDashboard.putNumber("Change In Distance Encoder", change_distance);
       SmartDashboard.putNumber("Motor Current", test_motor.getOutputCurrent());
       if (test_motor.getOutputCurrent() > base_current_zero_speed && change_distance <= encoder_approach_stall_threshold){
