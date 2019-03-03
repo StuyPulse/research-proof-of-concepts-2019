@@ -8,10 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Compressor;
-import frc.util.Gamepad;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,12 +25,10 @@ public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private Compressor compressor;
-  private OI oi;
-  private Gamepad driverGamepad;
-  private Gamepad operatorGamepad;
+  private OI oi;;
   private String m_autoSelected;
-  private static Drivetrain drivetrain;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public static Drivetrain drivetrain;
+  private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be
@@ -37,13 +36,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_chooser.addDefault("Default Auto", kDefaultAuto);
     oi = new OI();
-    driverGamepad = new Gamepad(RobotMap.DRIVER_GAMEPAD_PORT);
-    operatorGamepad = new Gamepad(RobotMap.OPERATOR_GAMEPAD_PORT);
     compressor = new Compressor(-1);
-    m_chooser.addObject("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    SmartDashboard.putData("Starting Location", m_chooser);
     drivetrain = new Drivetrain();
   }
 
@@ -53,7 +48,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
   }
@@ -79,12 +73,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    if(operatorGamepad.getRawRightTrigger()) {
-      compressor.start();
-    }
-    else {
-      compressor.stop();
-    }
   }
 
   /**

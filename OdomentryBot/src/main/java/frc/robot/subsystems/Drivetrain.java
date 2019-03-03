@@ -15,11 +15,11 @@ public class Drivetrain {
         gyro = new AHRS(RobotMap.NAVX);
     }
 
-    public getDistance() {
+    public double getDistance() {
         return (left.getDistance() + right.getDistance()) / 2;
     }
 
-    public getGyroAngle() {
+    public double getGyroAngle() {
         return gyro.getAngle();
     }
     

@@ -1,7 +1,7 @@
-package frc.robot.util;
+package frc.util;
 
+import frc.robot.Robot;
 import frc.robot.RobotMap;
-import edu.wpi.first.shuffleboard.SimpleWidget;
 
 public class Odomentry {
 
@@ -33,7 +33,6 @@ public class Odomentry {
     public Odomentry(StartingPosition pos) {
         this.x = pos.x();
         this.y = pos.y();
-        
     }
 
     public double[] updateCoordinates() {
@@ -45,11 +44,11 @@ public class Odomentry {
         return new double[] {x,y};
     }
 
-    public double updateX(int dist, int angle) {
+    public double updateX(double dist, double angle) {
         return dist * Math.cos(angle);
     }
 
-    public double updateY(int dist, int angle) {
+    public double updateY(double dist, double angle) {
         return dist * Math.sin(angle);
     }
 
