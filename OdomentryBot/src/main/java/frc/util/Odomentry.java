@@ -2,6 +2,7 @@ package frc.util;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.util.Limelight;
 
 public class Odomentry {
 
@@ -31,8 +32,20 @@ public class Odomentry {
     }
 
     public Odomentry(StartingPosition pos) {
-        this.x = pos.x();
-        this.y = pos.y();
+        switch(pos) {
+        case MIDDLE:
+            this.x = pos.x();
+            this.y = pos.y();
+            break;
+        case LEFT:
+            break;
+        }
+    }
+
+    private double[] calcOffsetFromL2Drop() {
+        double horizOffset = NetworkTable.getInstance().getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        double boxSize = NetworkTable.getInstance().getDefault().getTable("limelight").getEntry("tshort").getDouble(0);
+        return new double[] {-1, -1};
     }
 
     public double[] updateCoordinates() {
