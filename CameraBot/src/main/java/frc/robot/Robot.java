@@ -47,7 +47,6 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-
   private void updateSmartDashboard() {
     Map<String, Object> cameraStreamProperties = new HashMap<>();
     cameraStreamProperties.put("Show Crosshairs", true);
@@ -77,7 +76,7 @@ public class Robot extends TimedRobot {
     rightTopMotor.setInverted(true);
     leftBottomMotor.setInverted(true);
     rightBottomMotor.setInverted(true);
-
+    
     differentialDrive = new DifferentialDrive(leftTopMotor, rightTopMotor);
     //usbCamera = new UsbCamera("hi", 0);
     //CameraServer.getInstance().startAutomaticCapture(usbCamera);
